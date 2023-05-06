@@ -25,13 +25,17 @@ form.addEventListener('submit', (event) => {
 	// clear input field
 	input.value = '';
 
-  // actualiza el mensaje de si hay tareas pendientes
-	if (taskList.children.length === 0) {
-		emptyMessage.style.display = 'block';
-	} else {
-		emptyMessage.style.display = 'none';
-	}
+  updateEmptyMessageVisibility();
 });
+
+// actualiza el mensaje si hay tareas pendientes
+function updateEmptyMessageVisibility() {
+  if (taskList.children.length === 0) {
+    emptyMessage.style.display = 'block';
+  } else {
+    emptyMessage.style.display = 'none';
+  }
+};
 
 function createTaskListItem(aTaskValue) {
 	const li = document.createElement('li');
@@ -42,30 +46,38 @@ function createTaskListItem(aTaskValue) {
 	editButton.textContent = 'Editar';
 	editButton.classList.add('btn-secondary', 'btn-edit');
 	editButton.addEventListener('click', (event) => {
-  /* el target al primer hijo es para que no se muestre el contenido
+		/* el target al primer hijo es para que no se muestre el contenido
   "Editar" y "Borrar" que cuentan como elementos del nodo padre
   son elementos del nodo padre porque se añaden con textContent
   a la lista entera */
-		const currentTaskValue = event.target.parentNode.firstChild.nodeValue.trim();
+		const currentTaskValue =
+			event.target.parentNode.firstChild.nodeValue.trim();
 		const taskValue = prompt('Edita la tarea:', currentTaskValue);
-      if (taskValue.trim() === null) return;
-      /* es null cuando se presiona cancelar o escape en el prompt
+
+		if (taskValue.trim() === null) return;
+		/* es null cuando se presiona cancelar o escape en el prompt
       entonces, la funcion no hace nada y el valor se queda tal y
       como estaba */
 
-      // se fija que el valor de la tarea no sea string vacio
-      // o el mismo que el actual
-		if (taskValue === '' || taskValue === currentTaskValue.trim()) return;
+		// se fija que el valor de la tarea no sea string vacio
+		// o el mismo que el actual
+		if (taskValue === '' || taskValue.trim() === currentTaskValue.trim()) return;
 
-		li.textContent = taskValue;
+		// selecciona solo el texto del nodo firstChild
+		// para que no desaparezcan los botones
+		li.firstChild.textContent = taskValue;
 	});
 
+  // delete button
 	const deleteButton = document.createElement('button');
 	deleteButton.textContent = 'Borrar';
 	deleteButton.classList.add('btn-secondary', 'btn-delete');
 	deleteButton.addEventListener('click', (event) => {
-		taskList.removeChild(event.target.parentNode);
-		if (taskList.children.length === 0) emptyMessage.style.display = 'block';
+    const confirmation = confirm('¿Seguro que deseas eliminar esta tarea?');
+    if (confirmation) {
+      event.target.parentNode.remove();
+      updateEmptyMessageVisibility();
+    }
 	});
 
 	li.appendChild(editButton);

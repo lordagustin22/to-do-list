@@ -1,0 +1,29 @@
+{
+  "name": "to-do-list-app",
+  "version": "1.0.0",
+  "description": "A to do list app basic project written in JS",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lordagustin22/to-do-list.git"
+  },
+  "keywords": [
+    "to",
+    "do",
+    "list",
+    "begginner",
+    "project"
+  ],
+  "author": "カカマン",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lordagustin22/to-do-list/issues"
+  },
+  "homepage": "https://github.com/lordagustin22/to-do-list#readme",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
