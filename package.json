@@ -1,29 +1,12 @@
 {
   "name": "to-do-list-app",
   "version": "1.0.0",
-  "description": "A to do list app basic project written in JS",
+  "description": "About Not much to say. It's a good beginner project for starting out with front end development. Even if you have to google almost everything or use ChatGPT to start, I think it's good practice to at least stop watching so many tutorials (escape from tutorial hell) and prove your skills, prove that you've learned something.",
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lordagustin22/to-do-list.git"
-  },
-  "keywords": [
-    "to",
-    "do",
-    "list",
-    "begginner",
-    "project"
-  ],
-  "author": "カカマン",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lordagustin22/to-do-list/issues"
-  },
-  "homepage": "https://github.com/lordagustin22/to-do-list#readme",
-  "dependencies": {
-    "http-server": "^14.1.1"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
