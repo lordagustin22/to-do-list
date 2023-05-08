@@ -2,31 +2,63 @@
 const form = document.querySelector('#new-task-form');
 const taskList = document.querySelector('#task-list');
 const emptyMessage = document.querySelector('#empty');
+const message = document.querySelector('.task-list')
+let tasks = [];
+let task = {};
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+//   createTaskListItem();
+//   updateEmptyMessageVisibility();
+// });
 
 // Add a submit event listener to the form
 form.addEventListener('submit', (event) => {
 	// Prevent the form from submitting and refreshing the page
 	event.preventDefault();
+  addTasks();
+  updateEmptyMessageVisibility();
+});
 
-	// Get the value of the input field and trim any whitespace
+// Add task function
+function addTasks() {
+// If the input field is empty, alert
 	const input = document.querySelector('#new-task-input');
-	const taskValue = input.value.trim();
+  const taskValue = input.value.trim();
+  if (taskValue === '') {
+    showError('El campo no debe estar vacío!');
+    return;
+  }
 
-	// If the input field is empty, alert
-	if (!taskValue) {
-		alert('El campo no debe estar vacío!');
-		return;
-	}
+  task = {
+    aTask: taskValue,
+    id: new Date().getTime()
+  }
+
+  tasks.push(task);
 
 	// Create a new list item element and append it to the task list
-	const li = createTaskListItem(taskValue);
-	taskList.appendChild(li);
+  const li = createTaskListItem(taskValue);
+  taskList.appendChild(li);
 
 	// clear input field
 	input.value = '';
+}
 
-  updateEmptyMessageVisibility();
-});
+function syncStorage() {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function showError(err) {
+  const messageError = document.createElement('p');
+  messageError.textContent = err;
+  messageError.classList.add('error');
+
+  message.appendChild(messageError);
+  setTimeout(() => {
+    messageError.remove();
+  }, 2000);
+}
 
 // actualiza el mensaje si hay tareas pendientes
 function updateEmptyMessageVisibility() {
@@ -35,29 +67,30 @@ function updateEmptyMessageVisibility() {
   } else {
     emptyMessage.style.display = 'none';
   }
-};
+}
 
 function createTaskListItem(aTaskValue) {
-	const li = document.createElement('li');
-	li.textContent = aTaskValue;
+  const li = document.createElement('li');
+  li.textContent = aTaskValue;
 
 	// edit button
 	const editButton = document.createElement('button');
 	editButton.textContent = 'Editar';
 	editButton.classList.add('btn-secondary', 'btn-edit');
-	editButton.addEventListener('click', (event) => {
+
 		/* el target al primer hijo es para que no se muestre el contenido
   "Editar" y "Borrar" que cuentan como elementos del nodo padre
   son elementos del nodo padre porque se añaden con textContent
   a la lista entera */
+	editButton.addEventListener('click', (event) => {
 		const currentTaskValue =
 			event.target.parentNode.firstChild.nodeValue.trim();
 		const taskValue = prompt('Edita la tarea:', currentTaskValue);
 
-		if (taskValue.trim() === null) return;
 		/* es null cuando se presiona cancelar o escape en el prompt
       entonces, la funcion no hace nada y el valor se queda tal y
       como estaba */
+		if (taskValue.trim() === null) return;
 
 		// se fija que el valor de la tarea no sea string vacio
 		// o el mismo que el actual
@@ -72,6 +105,7 @@ function createTaskListItem(aTaskValue) {
 	const deleteButton = document.createElement('button');
 	deleteButton.textContent = 'Borrar';
 	deleteButton.classList.add('btn-secondary', 'btn-delete');
+
 	deleteButton.addEventListener('click', (event) => {
     const confirmation = confirm('¿Seguro que deseas eliminar esta tarea?');
     if (confirmation) {

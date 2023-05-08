@@ -40,6 +40,9 @@ input[type="text"] {
     border-radius: 4px;
 }
 
+.error {
+  color: red;
+}
 .btn {
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
