@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "description": "About Not much to say. It's a good beginner project for starting out with front end development. Even if you have to google almost everything or use ChatGPT to start, I think it's good practice to at least stop watching so many tutorials (escape from tutorial hell) and prove your skills, prove that you've learned something.",
   "main": "script.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node script.js",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.1.1",
+    "typescript": "^4.9.3"
+  }
 }

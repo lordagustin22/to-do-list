@@ -3,8 +3,6 @@ const form = document.querySelector('#new-task-form');
 const taskList = document.querySelector('#task-list');
 const emptyMessage = document.querySelector('#empty');
 const message = document.querySelector('.task-list')
-let tasks = [];
-let task = {};
 
 // document.addEventListener('DOMContentLoaded', () => {
 //   tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -30,13 +28,6 @@ function addTasks() {
     return;
   }
 
-  task = {
-    aTask: taskValue,
-    id: new Date().getTime()
-  }
-
-  tasks.push(task);
-
 	// Create a new list item element and append it to the task list
   const li = createTaskListItem(taskValue);
   taskList.appendChild(li);
@@ -45,17 +36,19 @@ function addTasks() {
 	input.value = '';
 }
 
-function syncStorage() {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
 function showError(err) {
+  const errorContainer = document.createElement('div');
   const messageError = document.createElement('p');
   messageError.textContent = err;
   messageError.classList.add('error');
+  message.appendChild(errorContainer);
+  errorContainer.appendChild(messageError);
 
-  message.appendChild(messageError);
+  const h2 = document.getElementById('tasks');
+  h2.parentNode.insertBefore(errorContainer, h2.nextSibling);
+
   setTimeout(() => {
+    errorContainer.remove();
     messageError.remove();
   }, 2000);
 }
